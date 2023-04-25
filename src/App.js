@@ -57,26 +57,40 @@ const TEST_USERS = [
 function App() {
 	const [inputValue, setInputValue] = useState("");
 	const [users, setUsers] = useState(TEST_USERS);
+	const [filteredUsers, setFilteredUsers] = useState(users);
+	const [isFiltered, setIsFiltered] = useState(false);
 
 	function inputChangeHandler(e) {
 		setInputValue(e.target.value);
+		filterUsersHandler(e.target.value, users);
 	}
 
 	function statusChangeHandler(id) {
-		let nextUsers = [...users];
+		let nextUsers = [...users].map(user => ({...user}));
 		let res = nextUsers.find(user => user.id === id);
 		res.status = !res.status;
 		setUsers(nextUsers);
 	}
 
 	function deleteUserHandler(id) {
-		let nextUsers = [...users];
+		let nextUsers = [...users].map(user => ({...user}));
 		let index  = nextUsers.findIndex(user => user.id === id);
-		console.log(id);
 		nextUsers.splice(index, 1);
 		setUsers(nextUsers);
 	}
 
+	function filterUsersHandler(str, users) {
+		if(str.length === 0) {
+			setUsers(users);
+			setIsFiltered(false);
+			return;
+		};
+		let filteredUsers = [...users].map(user => ({...user})).filter(user => {
+			return user.user.toLowerCase().includes(str.toLowerCase());
+		})
+		setFilteredUsers(filteredUsers);
+		setIsFiltered(true);
+	};
 
 	return (
 		<Container>
@@ -84,7 +98,7 @@ function App() {
 			<Table>
 				<TableHeader />
 				<TableContent
-					users={users}
+					users={isFiltered ? filteredUsers : users}
 					onStatusChange={statusChangeHandler}
 					onDelete={deleteUserHandler}
 				/>

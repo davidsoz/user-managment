@@ -10,7 +10,7 @@ export const TableH = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 55px 100px 45px 276px;
-    border-bottom: 2px solid gray;
+    border-bottom: 2px solid lightgray;
     >div {
         display: flex;
         gap: 20px;
@@ -39,4 +39,5 @@ export const AddButton = styled.button`
     top: -37px;
     cursor: pointer;
 `
+
 

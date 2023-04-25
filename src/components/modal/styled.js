@@ -18,5 +18,6 @@ export const Overlay = styled.div`
     .close {
         text-align: end;
         padding: 10px;
+        cursor: pointer;
     }
 `;

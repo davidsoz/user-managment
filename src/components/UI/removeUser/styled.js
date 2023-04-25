@@ -12,6 +12,7 @@ export const Button = styled.button`
     border-radius: 20px;
     color: #fff;
     margin-top: 20px;
+    cursor: pointer;
 `
 
 export const UserName = styled.div`
@@ -20,9 +21,13 @@ export const UserName = styled.div`
     justify-content: space-between;
     padding: 30px 0;
     border-bottom: 2px solid lightgray;
-    opacity: ${props => props.actove ? "1" : "0.5"};
+    opacity: ${props => props.active ? 1 : 0.6};
     img {
         position: absolute;
         left: -50px;
+    }
+    >div:last-child {
+        color: ${props => props.active ? "#44A0D3" : "#F79696"};
+        font-weight: bold;
     }
 `;

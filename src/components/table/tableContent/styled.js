@@ -5,7 +5,6 @@ export const TableC = styled.div`
 
 `;
 
-
 export const Row = styled.div`
     font-weight: 500;
     font-size: 16px;
@@ -13,7 +12,7 @@ export const Row = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 50px 100px 40px 276px;
-    border-bottom: 2px solid lightgray;
+    border-bottom: 1px solid lightgray;
     max-width: 1600px;
     margin: 0 auto;
     opacity: ${props => props.status ? 1 : 0.8};

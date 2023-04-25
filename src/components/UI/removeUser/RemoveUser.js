@@ -14,7 +14,7 @@ export default function RemoveUser({name, onDelete, id, active, onClose}) {
             <UserName active={active}>
                 <img onClick={onClose} src={face} alt="face"/>
                 <div>{name}</div>
-                <div>{active ? "Active User" : "Inactive User"}</div>
+                <div active={active}>{active ? "Active User" : "Inactive User"}</div>
             </UserName>
             <Button onClick={onDeleteHandler}>delete user</Button>
         </Wrapper>
