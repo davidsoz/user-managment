@@ -14,6 +14,7 @@ export const TableH = styled.div`
     .select {
         border: none;
         background-color: #f3f3f3;
+        outline: none;
     }
     >div.pagination {
         display: flex;

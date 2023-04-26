@@ -96,7 +96,7 @@ function App() {
 		setIsFiltered(true);
 	};
 
-	function closeModalHandler() {
+	function addUserCloseModalHandler() {
 		setAddUserShowModal(false);
 	}
 
@@ -116,8 +116,8 @@ function App() {
 	return (
 		<Container>
 			{addUserShowModal &&
-				<Modal onClose={closeModalHandler}>
-					<AddUser onAddUser={AddUserHandler} onClose={closeModalHandler}/>
+				<Modal onClose={addUserCloseModalHandler}>
+					<AddUser onAddUser={AddUserHandler} onClose={addUserCloseModalHandler}/>
 				</Modal>
 			}
 			<Header inputValue={inputValue} inputChange={inputChangeHandler}/>
@@ -128,7 +128,7 @@ function App() {
 					onStatusChange={statusChangeHandler}
 					onDelete={deleteUserHandler}
 				/>
-				<TableFooter />
+				{!isFiltered && <TableFooter />}
 			</Table>
 
 		</Container>

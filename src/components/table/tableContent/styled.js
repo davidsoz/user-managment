@@ -15,7 +15,7 @@ export const Row = styled.div`
     border-bottom: 1px solid lightgray;
     max-width: 1600px;
     margin: 0 auto;
-    opacity: ${props => props.status ? 1 : 0.8};
+    opacity: ${props => props.status ? 1 : 0.5};
 `;
 
 export const Avatar = styled.div `

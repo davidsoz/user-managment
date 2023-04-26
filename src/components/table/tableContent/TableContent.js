@@ -5,7 +5,6 @@ import trash from "../../../icons/svg/trash.svg";
 import vpnKeyOn from "../../../icons/svg/vpn_keyOn.svg";
 import vpnKeyOff from "../../../icons/svg/vpn_keyOff.svg";
 import avatarOn from "../../../icons/svg/avatarOn.svg";
-import avatarOff from "../../../icons/svg/avatarOff.svg";
 import setup from "../../../icons/svg/setup.svg";
 import Modal from "../../modal/Modal";
 import RemoveUser from "../../UI/removeUser/RemoveUser";
@@ -47,7 +46,7 @@ export default function TableContent({ users, onStatusChange, onDelete }) {
                     <Row key={user.id} status={user.status}>
                         <User>
                             <Avatar>
-                                <img src={user.status ? avatarOn : avatarOff} alt="avatar" />
+                                <img src={avatarOn} alt="avatar" />
                             </Avatar>
                             <div>{user.fullName}</div>
                             <div>{user.email}</div>

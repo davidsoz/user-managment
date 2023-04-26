@@ -78,7 +78,7 @@ export const Role = styled.div`
 `;
 
 export const Button = styled.button`
-    background-color: #44A0D3;
+    background-color: ${props => props.active ? "#44A0D3" : "#C6C6C6"};
     padding: 10px 30px;
     border: none;
     border-radius: 20px;

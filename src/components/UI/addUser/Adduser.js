@@ -10,7 +10,7 @@ export default function AddUser({onAddUser, onClose}) {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
-    const [role, setRole] = useState(null);
+    const [role, setRole] = useState("");
     const [valid, setValid] = useState(false);
 
     function firstNameChangeHandler(e) {
@@ -99,7 +99,7 @@ export default function AddUser({onAddUser, onClose}) {
             </Role>
             <div>
                 <Button active={valid} onClick={sendInvitationHandler}>Send Invitation</Button>
-                <Message valid={valid}>{valid ? "Good To Go" : "Fill In All The Fields"}</Message>
+                <Message valid={valid}>{valid ? "Good to go" : "Fill In All The Fields"}</Message>
             </div>
         </Wrapper>
     )
