@@ -1,22 +1,22 @@
-import { AddButton, TableH } from "./styled";
+import { AddButton, Arrow, TableH } from "./styled";
 import polygon from "../../../icons/svg/Polygon 1.svg";
 
-export default function TableHeader({onAddUserShowModal}) {
+export default function TableHeader({onAddUserShowModal, sortedByRole, sortByRole}) {
     return (
         <>
             <TableH>
                 <AddButton onClick={onAddUserShowModal}>&#43;</AddButton>
                 <div>
                     <span>USER</span>
-                    <img src={polygon} alt="polygon" />
+                    <Arrow src={polygon} alt="polygon" />
                 </div>
                 <div>
                     <span>ROLE</span>
-                    <img src={polygon} alt="polygon" />
+                    <Arrow sortedByRole={sortedByRole} onClick={sortByRole} src={polygon} alt="polygon" />
                 </div>
                 <div>
                     <span>STATUS</span>
-                    <img src={polygon} alt="polygon" />
+                    <Arrow src={polygon} alt="polygon" />
                 </div>
                 <div>
                     <span>ACTIONS</span>

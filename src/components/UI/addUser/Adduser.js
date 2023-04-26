@@ -35,9 +35,9 @@ export default function AddUser({onAddUser, onClose}) {
         let newUser = {
             id: 0,
             fullName: firstName + " " + lastName,
-            firstName: firstName,
-            LastName: lastName,
-            email: email,
+            firstName,
+            lastName,
+            email,
             admin: role === "Admin" ? true : false,
             status: true,
         }

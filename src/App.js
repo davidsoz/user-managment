@@ -12,7 +12,7 @@ const TEST_USERS = [
 		id: 0,
 		fullName: "Samanta Standford",
 		firstName: "Samanta",
-		LastName: "Standford",
+		lastName: "Standford",
 		email: "samantastandford@gmail.com",
 		admin: true,
 		status: false,
@@ -21,7 +21,7 @@ const TEST_USERS = [
 		id: 1,
 		fullName: "John Doe",
 		firstName: "John",
-		LastName: "Doe",
+		lastName: "Doe",
 		email: "JohnDoe@gmail.com",
 		admin: true,
 		status: true,
@@ -30,7 +30,7 @@ const TEST_USERS = [
 		id: 2,
 		fullName: "Will Smith",
 		firstName: "Will",
-		LastName: "Smith",
+		lastName: "Smith",
 		email: "WillSmith@gmail.com",
 		admin: false,
 		status: true,
@@ -39,7 +39,7 @@ const TEST_USERS = [
 		id: 3,
 		fullName: "Jim Buttler",
 		firstName: "Jim",
-		LastName: "Buttler",
+		lastName: "Buttler",
 		email: "JimButtler@gmail.com",
 		admin: true,
 		status: true,
@@ -48,7 +48,7 @@ const TEST_USERS = [
 		id: 4,
 		fullName: "Jonny Cole",
 		firstName: "Jonny",
-		LastName: "Cole",
+		lastName: "Cole",
 		email: "JonnyCole@gmail.com",
 		admin: true,
 		status: true,
@@ -62,6 +62,8 @@ function App() {
 	const [filteredUsers, setFilteredUsers] = useState(users);
 	const [isFiltered, setIsFiltered] = useState(false);
 	const [addUserShowModal, setAddUserShowModal] = useState(false);
+	const [sortedByAdmin, setSortedByAdmin] = useState(false);
+	const [sortedByUser, setSortedByUser] = useState(false);
 
 	function inputChangeHandler(e) {
 		setInputValue(e.target.value);
@@ -112,6 +114,24 @@ function App() {
 		nextUsers.unshift(newUser);
 		setUsers(nextUsers)
 	}
+	function splitUsersByRole() {
+		let nextUsers = [...users].map(user => ({...user}));
+		let adminSlice = nextUsers.filter(user => user.admin);
+		let userSlice = nextUsers.filter(user => !user.admin);
+		return { adminSlice, userSlice };
+	}
+
+	function sortByAdmin() {
+		let users = splitUsersByRole();
+		setUsers([...users.adminSlice, ...users.userSlice]);
+		setSortedByAdmin(true);
+    }
+
+	function sortByUser() {
+		let users = splitUsersByRole();
+		setUsers([...users.userSlice, ...users.adminSlice]);
+		setSortedByAdmin(false);
+    }
 
 	return (
 		<Container>
@@ -120,9 +140,16 @@ function App() {
 					<AddUser onAddUser={AddUserHandler} onClose={addUserCloseModalHandler}/>
 				</Modal>
 			}
-			<Header inputValue={inputValue} inputChange={inputChangeHandler}/>
+			<Header
+				inputValue={inputValue}
+				inputChange={inputChangeHandler}
+			/>
 			<Table>
-				<TableHeader onAddUserShowModal={addUserShowModalHandler}/>
+				<TableHeader
+					onAddUserShowModal={addUserShowModalHandler}
+					sortByRole={sortedByAdmin ? sortByUser : sortByAdmin}
+					sortedByRole={sortedByAdmin}
+				/>
 				<TableContent
 					users={isFiltered ? filteredUsers : users}
 					onStatusChange={statusChangeHandler}

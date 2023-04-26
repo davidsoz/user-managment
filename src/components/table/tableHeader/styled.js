@@ -16,6 +16,9 @@ export const TableH = styled.div`
         gap: 20px;
         width: 150px;
         justify-content: center;
+        img {
+
+        }
     }
     >div:nth-child(2) {
         justify-content: start;
@@ -24,6 +27,11 @@ export const TableH = styled.div`
     >div:last-child {
         justify-content: end;
     }
+`;
+
+export const Arrow = styled.img`
+    cursor: pointer;
+    transform: ${props => props.sortedByRole ? "rotate(180deg)" : "rotate(0deg)"} ;;
 `;
 
 export const AddButton = styled.button`
