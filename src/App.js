@@ -63,7 +63,6 @@ function App() {
 	const [isFiltered, setIsFiltered] = useState(false);
 	const [addUserShowModal, setAddUserShowModal] = useState(false);
 	const [sortedByAdmin, setSortedByAdmin] = useState(false);
-	const [sortedByUser, setSortedByUser] = useState(false);
 
 	function inputChangeHandler(e) {
 		setInputValue(e.target.value);
@@ -71,7 +70,7 @@ function App() {
 	}
 
 	function statusChangeHandler(id) {
-		let nextUsers = [...users].map(user => ({...user}));
+		let nextUsers = [...users].map(user => ({ ...user }));
 		let res = nextUsers.find(user => user.id === id);
 		res.status = !res.status;
 		setUsers(nextUsers);
@@ -79,19 +78,19 @@ function App() {
 
 
 	function deleteUserHandler(id) {
-		let nextUsers = [...users].map(user => ({...user}));
-		let index  = nextUsers.findIndex(user => user.id === id);
+		let nextUsers = [...users].map(user => ({ ...user }));
+		let index = nextUsers.findIndex(user => user.id === id);
 		nextUsers.splice(index, 1);
 		setUsers(nextUsers);
 	}
 
 	function filterUsersHandler(str, users) {
-		if(str.length === 0) {
+		if (str.length === 0) {
 			setUsers(users);
 			setIsFiltered(false);
 			return;
 		};
-		let filteredUsers = [...users].map(user => ({...user})).filter(user => {
+		let filteredUsers = [...users].map(user => ({ ...user })).filter(user => {
 			return user.fullName.toLowerCase().includes(str.toLowerCase());
 		})
 		setFilteredUsers(filteredUsers);
@@ -107,7 +106,7 @@ function App() {
 	}
 
 	function AddUserHandler(newUser) {
-		let nextUsers = [...users].map(user => ({...user}));
+		let nextUsers = [...users].map(user => ({ ...user }));
 		nextUsers.forEach(user => {
 			user.id += 1;
 		})
@@ -115,7 +114,7 @@ function App() {
 		setUsers(nextUsers)
 	}
 	function splitUsersByRole() {
-		let nextUsers = [...users].map(user => ({...user}));
+		let nextUsers = [...users].map(user => ({ ...user }));
 		let adminSlice = nextUsers.filter(user => user.admin);
 		let userSlice = nextUsers.filter(user => !user.admin);
 		return { adminSlice, userSlice };
@@ -125,40 +124,45 @@ function App() {
 		let users = splitUsersByRole();
 		setUsers([...users.adminSlice, ...users.userSlice]);
 		setSortedByAdmin(true);
-    }
+	}
 
 	function sortByUser() {
 		let users = splitUsersByRole();
 		setUsers([...users.userSlice, ...users.adminSlice]);
 		setSortedByAdmin(false);
-    }
+	}
 
 	return (
-		<Container>
-			{addUserShowModal &&
-				<Modal onClose={addUserCloseModalHandler}>
-					<AddUser onAddUser={AddUserHandler} onClose={addUserCloseModalHandler}/>
-				</Modal>
-			}
-			<Header
-				inputValue={inputValue}
-				inputChange={inputChangeHandler}
-			/>
-			<Table>
-				<TableHeader
-					onAddUserShowModal={addUserShowModalHandler}
-					sortByRole={sortedByAdmin ? sortByUser : sortByAdmin}
-					sortedByRole={sortedByAdmin}
+		<>
+			<Container>
+				{addUserShowModal &&
+					<Modal onClose={addUserCloseModalHandler}>
+						<AddUser onAddUser={AddUserHandler} onClose={addUserCloseModalHandler} />
+					</Modal>
+				}
+				<Header
+					inputValue={inputValue}
+					inputChange={inputChangeHandler}
+					title="Project Access"
+					withInput={true}
 				/>
-				<TableContent
-					users={isFiltered ? filteredUsers : users}
-					onStatusChange={statusChangeHandler}
-					onDelete={deleteUserHandler}
-				/>
-				{!isFiltered && <TableFooter />}
-			</Table>
+				<Table>
+					<TableHeader
+						onAddUserShowModal={addUserShowModalHandler}
+						sortByRole={sortedByAdmin ? sortByUser : sortByAdmin}
+						sortedByRole={sortedByAdmin}
+					/>
+					<TableContent
+						users={isFiltered ? filteredUsers : users}
+						onStatusChange={statusChangeHandler}
+						onDelete={deleteUserHandler}
+					/>
+					{!isFiltered && <TableFooter />}
+				</Table>
 
-		</Container>
+			</Container>
+		</>
+
 	);
 }
 
