@@ -34,7 +34,12 @@ export default function TableContent({ users, onStatusChange, onDelete }) {
         <TableC>
             {showRemoveModal &&
                 <Modal onClose={closeModalHandler}>
-                    <RemoveUser onDelete={onDelete} id={id} onClose={closeModalHandler} name={name} active={active}/>
+                    <RemoveUser onDelete={onDelete}
+                        id={id}
+                        onClose={closeModalHandler}
+                        name={name}
+                        active={active}
+                    />
                 </Modal>
             }
             {
@@ -44,7 +49,7 @@ export default function TableContent({ users, onStatusChange, onDelete }) {
                             <Avatar>
                                 <img src={user.status ? avatarOn : avatarOff} alt="avatar" />
                             </Avatar>
-                            <div>{user.user}</div>
+                            <div>{user.fullName}</div>
                             <div>{user.email}</div>
                         </User>
                         <Role>
@@ -62,7 +67,7 @@ export default function TableContent({ users, onStatusChange, onDelete }) {
                             {
                                 user.status ? <img className="setup" src={setup} alt="setup" /> : null
                             }
-                            <img onClick={() => removeHandler(user.id, user.user, user.status)} src={trash} alt="trash" />
+                            <img onClick={() => removeHandler(user.id, user.fullName, user.status)} src={trash} alt="trash" />
                         </Action>
                     </Row>
                 ))

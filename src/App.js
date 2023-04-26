@@ -4,11 +4,13 @@ import { Container, Table } from "./styled";
 import TableHeader from "./components/table/tableHeader/TableHeader";
 import TableContent from "./components/table/tableContent/TableContent";
 import TableFooter from "./components/table/tableFooter/TableFooter";
+import Modal from "./components/modal/Modal";
+import AddUser from "./components/UI/addUser/Adduser";
 
 const TEST_USERS = [
 	{
 		id: 0,
-		user: "Samanta Standford",
+		fullName: "Samanta Standford",
 		firstName: "Samanta",
 		LastName: "Standford",
 		email: "samantastandford@gmail.com",
@@ -17,7 +19,7 @@ const TEST_USERS = [
 	},
 	{
 		id: 1,
-		user: "John Doe",
+		fullName: "John Doe",
 		firstName: "John",
 		LastName: "Doe",
 		email: "JohnDoe@gmail.com",
@@ -26,7 +28,7 @@ const TEST_USERS = [
 	},
 	{
 		id: 2,
-		user: "Will Smith",
+		fullName: "Will Smith",
 		firstName: "Will",
 		LastName: "Smith",
 		email: "WillSmith@gmail.com",
@@ -35,7 +37,7 @@ const TEST_USERS = [
 	},
 	{
 		id: 3,
-		user: "Jim Buttler",
+		fullName: "Jim Buttler",
 		firstName: "Jim",
 		LastName: "Buttler",
 		email: "JimButtler@gmail.com",
@@ -44,7 +46,7 @@ const TEST_USERS = [
 	},
 	{
 		id: 4,
-		user: "Jonny Cole",
+		fullName: "Jonny Cole",
 		firstName: "Jonny",
 		LastName: "Cole",
 		email: "JonnyCole@gmail.com",
@@ -59,6 +61,7 @@ function App() {
 	const [users, setUsers] = useState(TEST_USERS);
 	const [filteredUsers, setFilteredUsers] = useState(users);
 	const [isFiltered, setIsFiltered] = useState(false);
+	const [addUserShowModal, setAddUserShowModal] = useState(false);
 
 	function inputChangeHandler(e) {
 		setInputValue(e.target.value);
@@ -71,6 +74,7 @@ function App() {
 		res.status = !res.status;
 		setUsers(nextUsers);
 	}
+
 
 	function deleteUserHandler(id) {
 		let nextUsers = [...users].map(user => ({...user}));
@@ -86,17 +90,39 @@ function App() {
 			return;
 		};
 		let filteredUsers = [...users].map(user => ({...user})).filter(user => {
-			return user.user.toLowerCase().includes(str.toLowerCase());
+			return user.fullName.toLowerCase().includes(str.toLowerCase());
 		})
 		setFilteredUsers(filteredUsers);
 		setIsFiltered(true);
 	};
 
+	function closeModalHandler() {
+		setAddUserShowModal(false);
+	}
+
+	function addUserShowModalHandler() {
+		setAddUserShowModal(true);
+	}
+
+	function AddUserHandler(newUser) {
+		let nextUsers = [...users].map(user => ({...user}));
+		nextUsers.forEach(user => {
+			user.id += 1;
+		})
+		nextUsers.unshift(newUser);
+		setUsers(nextUsers)
+	}
+
 	return (
 		<Container>
+			{addUserShowModal &&
+				<Modal onClose={closeModalHandler}>
+					<AddUser onAddUser={AddUserHandler} onClose={closeModalHandler}/>
+				</Modal>
+			}
 			<Header inputValue={inputValue} inputChange={inputChangeHandler}/>
 			<Table>
-				<TableHeader />
+				<TableHeader onAddUserShowModal={addUserShowModalHandler}/>
 				<TableContent
 					users={isFiltered ? filteredUsers : users}
 					onStatusChange={statusChangeHandler}

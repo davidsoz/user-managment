@@ -1,11 +1,11 @@
 import { AddButton, TableH } from "./styled";
 import polygon from "../../../icons/svg/Polygon 1.svg";
 
-export default function TableHeader() {
+export default function TableHeader({onAddUserShowModal}) {
     return (
         <>
             <TableH>
-                <AddButton>&#43;</AddButton>
+                <AddButton onClick={onAddUserShowModal}>&#43;</AddButton>
                 <div>
                     <span>USER</span>
                     <img src={polygon} alt="polygon" />
