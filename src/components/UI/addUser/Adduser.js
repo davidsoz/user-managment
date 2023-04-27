@@ -1,4 +1,4 @@
-import { Button, Message, Role, Wrapper } from "./styled";
+import { Button, Icon, Message, Role, Wrapper } from "./styled";
 import { Email, Fullname } from "./styled";
 import face from "../../../icons/svg/face-24px (1).svg";
 import emailIcon from "../../../icons/svg/alternate_email-24px.svg";
@@ -61,7 +61,7 @@ export default function AddUser({onAddUser, onClose}) {
         <Wrapper>
             <h1>Invite New User</h1>
             <Fullname>
-                <img src={face} alt="face"/>
+                <Icon src={face} alt="face"/>
                 <div>
                     <Input
                         onChange={firstNameChangeHandler}
@@ -80,7 +80,7 @@ export default function AddUser({onAddUser, onClose}) {
                 </div>
             </Fullname>
             <Email>
-                <img src={emailIcon} alt="face"/>
+                <Icon valid={valid} src={emailIcon} alt="face"/>
                 <Input
                     valid={valid}
                     onChange={emailChangeHandler}
@@ -90,7 +90,7 @@ export default function AddUser({onAddUser, onClose}) {
                 />
             </Email>
             <Role>
-                <img src={adminKey} alt="face"/>
+                <Icon src={adminKey} alt="face"/>
                 <select value={role} onChange={roleChangeHandler}>
                     <option value="" hidden>* Role</option>
                     <option>Admin</option>

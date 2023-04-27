@@ -30,6 +30,10 @@ export const TableH = styled.div`
                 font-weight: bold;
                 border-radius: 5px;
                 background-color: #C6C6C6;
+                cursor: pointer;
+            }
+            div:last-child {
+                background-color: #f3f3f3;
             }
         }
     }

@@ -6,10 +6,7 @@ export const Wrapper = styled.div`
     padding-bottom: 60px;
 
     img {
-        position: absolute;
-        left: -50px;
-        top: 5px;
-        opacity: 0.5;
+
     }
     >div:last-child {
         display: flex;
@@ -17,6 +14,13 @@ export const Wrapper = styled.div`
         align-items: center;
         margin-top: 30px;
     }
+`;
+
+export const Icon = styled.img`
+    position: absolute;
+    left: -50px;
+    top: 5px;
+    opacity: ${props => props.valid ? 1 : 0.5}
 `;
 
 export const Message = styled.div`
@@ -69,10 +73,6 @@ export const Role = styled.div`
         border: none;
         border-bottom: 2px solid lightgray;
         margin-top: 10px;
-        span {
-            /* background-color: #B4B4B4; */
-            background-color: red;
-        }
     }
 
 `;

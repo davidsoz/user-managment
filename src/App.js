@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/header/Header";
 import { Container, Table } from "./styled";
 import TableHeader from "./components/table/tableHeader/TableHeader";
@@ -6,6 +6,7 @@ import TableContent from "./components/table/tableContent/TableContent";
 import TableFooter from "./components/table/tableFooter/TableFooter";
 import Modal from "./components/modal/Modal";
 import AddUser from "./components/UI/addUser/Adduser";
+import UserEditPage from "./components/userEditPage/UserEditPage";
 
 const TEST_USERS = [
 	{
@@ -33,7 +34,7 @@ const TEST_USERS = [
 		lastName: "Smith",
 		email: "WillSmith@gmail.com",
 		admin: false,
-		status: true,
+		status: false,
 	},
 	{
 		id: 3,
@@ -53,8 +54,52 @@ const TEST_USERS = [
 		admin: true,
 		status: true,
 	},
+	{
+		id: 5,
+		fullName: "Bryan Holt ",
+		firstName: "Bryan",
+		lastName: "Holt",
+		email: "bryanstandford@gmail.com",
+		admin: false,
+		status: false,
+	},
+	{
+		id: 6,
+		fullName: "Michael Bone",
+		firstName: "Michael",
+		lastName: "Bone",
+		email: "MichaelBone@gmail.com",
+		admin: true,
+		status: false,
+	},
+	{
+		id: 7,
+		fullName: "Jim Serrone",
+		firstName: "Jim",
+		lastName: "Serrone",
+		email: "JimSerrone@gmail.com",
+		admin: false,
+		status: true,
+	},
+	{
+		id: 8,
+		fullName: "Billy Williams",
+		firstName: "Billy",
+		lastName: "Williams",
+		email: "BillyWilliams@gmail.com",
+		admin: true,
+		status: false,
+	},
+	{
+		id: 9,
+		fullName: "Barbra Collins",
+		firstName: "Barbra",
+		lastName: "Collins",
+		email: "BarbraColeCollins@gmail.com",
+		admin: true,
+		status: true,
+	},
 ]
-
 
 function App() {
 	const [inputValue, setInputValue] = useState("");
@@ -63,6 +108,7 @@ function App() {
 	const [isFiltered, setIsFiltered] = useState(false);
 	const [addUserShowModal, setAddUserShowModal] = useState(false);
 	const [sortedByAdmin, setSortedByAdmin] = useState(false);
+	const [setupPage,setSetupPage] = useState(false);
 
 	function inputChangeHandler(e) {
 		setInputValue(e.target.value);
@@ -115,52 +161,66 @@ function App() {
 	}
 	function splitUsersByRole() {
 		let nextUsers = [...users].map(user => ({ ...user }));
-		let adminSlice = nextUsers.filter(user => user.admin);
-		let userSlice = nextUsers.filter(user => !user.admin);
-		return { adminSlice, userSlice };
+		let adminUsers = nextUsers.filter(user => user.admin);
+		let nonAdminUsers = nextUsers.filter(user => !user.admin);
+		return { adminUsers, nonAdminUsers };
 	}
 
 	function sortByAdmin() {
 		let users = splitUsersByRole();
-		setUsers([...users.adminSlice, ...users.userSlice]);
+		setUsers([...users.adminUsers, ...users.nonAdminUsers]);
 		setSortedByAdmin(true);
 	}
 
 	function sortByUser() {
 		let users = splitUsersByRole();
-		setUsers([...users.userSlice, ...users.adminSlice]);
+		setUsers([...users.nonAdminUsers, ...users.adminUsers]);
 		setSortedByAdmin(false);
 	}
 
+	function navToSetupPage() {
+		setSetupPage(true);
+	}
+
+	function closeSetupPage() {
+		setSetupPage(false);
+	}
+
+
 	return (
 		<>
-			<Container>
-				{addUserShowModal &&
-					<Modal onClose={addUserCloseModalHandler}>
-						<AddUser onAddUser={AddUserHandler} onClose={addUserCloseModalHandler} />
-					</Modal>
-				}
-				<Header
-					inputValue={inputValue}
-					inputChange={inputChangeHandler}
-					title="Project Access"
-					withInput={true}
-				/>
-				<Table>
-					<TableHeader
-						onAddUserShowModal={addUserShowModalHandler}
-						sortByRole={sortedByAdmin ? sortByUser : sortByAdmin}
-						sortedByRole={sortedByAdmin}
-					/>
-					<TableContent
-						users={isFiltered ? filteredUsers : users}
-						onStatusChange={statusChangeHandler}
-						onDelete={deleteUserHandler}
-					/>
-					{!isFiltered && <TableFooter />}
-				</Table>
+			{
+				setupPage ? <UserEditPage onClose={closeSetupPage}/> :
 
-			</Container>
+				<Container>
+					{addUserShowModal &&
+						<Modal onClose={addUserCloseModalHandler}>
+							<AddUser onAddUser={AddUserHandler} onClose={addUserCloseModalHandler} />
+						</Modal>
+					}
+					<Header
+						inputValue={inputValue}
+						inputChange={inputChangeHandler}
+						title="Project Access"
+						withInput={true}
+					/>
+					<Table>
+						<TableHeader
+							onAddUserShowModal={addUserShowModalHandler}
+							sortByRole={sortedByAdmin ? sortByUser : sortByAdmin}
+							sortedByRole={sortedByAdmin}
+						/>
+						<TableContent
+							users={isFiltered ? filteredUsers : users}
+							onStatusChange={statusChangeHandler}
+							onDelete={deleteUserHandler}
+							onSetupPage={navToSetupPage}
+							closeSetupPage={closeSetupPage}
+						/>
+						{!isFiltered && <TableFooter />}
+					</Table>
+				</Container>
+			}
 		</>
 
 	);
