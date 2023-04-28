@@ -66,7 +66,7 @@ export default function TableContent({ users, onStatusChange, onDelete, onSetupP
                             </Status>
                             <Action>
                                 {
-                                    user.status ? <img onClick={onSetupPage} className="setup" src={setup} alt="setup" /> : null
+                                    user.status ? <img onClick={() => onSetupPage(user.id)} className="setup" src={setup} alt="setup" /> : null
                                 }
                                 <img onClick={() => removeHandler(user.id, user.fullName, user.status)} src={trash} alt="trash" />
                             </Action>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Header from "./components/header/Header";
 import { Container, Table } from "./styled";
 import TableHeader from "./components/table/tableHeader/TableHeader";
@@ -108,7 +108,8 @@ function App() {
 	const [isFiltered, setIsFiltered] = useState(false);
 	const [addUserShowModal, setAddUserShowModal] = useState(false);
 	const [sortedByAdmin, setSortedByAdmin] = useState(false);
-	const [setupPage,setSetupPage] = useState(false);
+	const [setupPage, setSetupPage] = useState(false);
+	const [editUser, setEditUser] = useState(null);
 
 	function inputChangeHandler(e) {
 		setInputValue(e.target.value);
@@ -178,7 +179,10 @@ function App() {
 		setSortedByAdmin(false);
 	}
 
-	function navToSetupPage() {
+	function showSetupPage(id) {
+		let editUser = users.find(user => user.id === id);
+		console.log(editUser);
+		setEditUser(editUser);
 		setSetupPage(true);
 	}
 
@@ -190,7 +194,7 @@ function App() {
 	return (
 		<>
 			{
-				setupPage ? <UserEditPage onClose={closeSetupPage}/> :
+				setupPage ? <UserEditPage editUser={editUser} onClose={closeSetupPage}/> :
 
 				<Container>
 					{addUserShowModal &&
@@ -214,7 +218,7 @@ function App() {
 							users={isFiltered ? filteredUsers : users}
 							onStatusChange={statusChangeHandler}
 							onDelete={deleteUserHandler}
-							onSetupPage={navToSetupPage}
+							onSetupPage={showSetupPage}
 							closeSetupPage={closeSetupPage}
 						/>
 						{!isFiltered && <TableFooter />}
@@ -222,7 +226,6 @@ function App() {
 				</Container>
 			}
 		</>
-
 	);
 }
 

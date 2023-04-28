@@ -1,10 +1,11 @@
 import Header from "../header/Header";
 import {Button, Container, Details, Input, UserInfo, UserStatus, Wrapper, Form, Permission } from "./styled";
-import avatar from "../../icons/svg/Group 2.svg"
-import statusOn from "../../icons/svg/statusOn.svg"
+import avatar from "../../icons/svg/Group 2.svg";
+import statusOn from "../../icons/svg/statusOn.svg";
+import statusOff from "../../icons/svg/statusOff.svg";
 import arrowDown from "../../icons/svg/keyboard_arrow_down-24px (2).svg";
 
-export default function UserEditPage({user, onClose}) {
+export default function UserEditPage({editUser, onClose}) {
     return (
         <Wrapper>
             <Header title="Setup User"/>
@@ -15,8 +16,8 @@ export default function UserEditPage({user, onClose}) {
                             <span>UPLOAD A PHOTO</span>
                         </div>
                         <div>
-                            <h1>Danniel Blichman</h1>
-                            <span>email@email.com</span>
+                            <h1>{editUser.fullName}</h1>
+                            <span>{editUser.email}</span>
                         </div>
                         <div>
                             <Button>Resend the invite</Button>
@@ -32,11 +33,11 @@ export default function UserEditPage({user, onClose}) {
                                 <div>The user is Active</div>
                             </UserStatus>
                             <label htmlFor="firstname">* Name</label>
-                            <Input name="firtname"/>
+                            <Input name="firtname" value={editUser.firstName} />
                             <label htmlFor="lastname">* LastName</label>
-                            <Input name="lastname"/>
+                            <Input name="lastname" value={editUser.lastName} />
                             <label htmlFor="email">* Email</label>
-                            <Input name="email"/>
+                            <Input name="email" value={editUser.email}/>
                         </Form>
                         <div>
                             <Button onClick={onClose}>Save changes</Button>
@@ -49,7 +50,7 @@ export default function UserEditPage({user, onClose}) {
                         </div>
                         <div className="flex super-admin">
                             <h3>Super Admin</h3>
-                            <img src={statusOn} alt="status"/>
+                            <img src={editUser.status ? statusOn : statusOff} alt="status"/>
                         </div>
                         <div>
                             <div>
